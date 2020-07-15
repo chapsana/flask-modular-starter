@@ -6,16 +6,16 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     {% if title %}
-    <title>{{ title }}</title>
+        <title>{{ title }}</title>
     {% else %}
-    <title>Flask Dashboard ModularAdmin - Open-Source Admin Panel | AppSeed</title>
+        <title>Flask Dashboard ModularAdmin - Open-Source Admin Panel | AppSeed</title>
     {% endif %}
 
     {% if description %}
-    <meta name="description" content="{{ description }}">
+        <meta name="description" content="{{ description }}">
     {% else %}
-    <meta name="description"
-        content="Open-Source Admin Dashboard with Modular Admin Design coded in Flask. Features: SQLite, ORM and session-based authentication.">
+        <meta name="description"
+              content="Open-Source Admin Dashboard with Modular Admin Design coded in Flask. Features: SQLite, ORM and session-based authentication.">
     {% endif %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,8 +30,7 @@
         var themeName = themeSettings.themeName || '';
         if (themeName) {
             document.write('<link rel="stylesheet" id="theme-style" href="/static/assets/css/app-' + themeName + '.css">');
-        }
-        else {
+        } else {
             document.write('<link rel="stylesheet" id="theme-style" href="/static/assets/css/app.css">');
         }
     </script>
@@ -39,24 +38,24 @@
 
 <body>
 
-    <div class="auth">
-        <div class="auth-container">
+<div class="auth">
+    <div class="auth-container">
 
-            {{ content | safe }}
+        {{ content | safe }}
 
-        </div>
     </div>
+</div>
 
-    <!-- Reference block for JS -->
-    <div class="ref" id="ref">
+<!-- Reference block for JS -->
+<div class="ref" id="ref">
+    <div class="color-primary"></div>
+    <div class="chart">
         <div class="color-primary"></div>
-        <div class="chart">
-            <div class="color-primary"></div>
-            <div class="color-secondary"></div>
-        </div>
+        <div class="color-secondary"></div>
     </div>
+</div>
 
-    {% include 'includes/scripts.html' %}
+{% include 'includes/scripts.html' %}
 
 </body>
 
