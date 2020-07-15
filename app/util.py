@@ -1,13 +1,12 @@
 # -*- encoding: utf-8 -*-
-
-
 from flask   import json, url_for, jsonify, render_template
 from jinja2  import TemplateNotFound
 from app     import app
 
-from . models import User
-from app    import app,db,bc,mail
-from . common import *
+from . models.user import User
+from app    import app,db
+# ,mail
+# from . common import *
 from sqlalchemy import desc,or_
 import hashlib
 from flask_mail  import Message
