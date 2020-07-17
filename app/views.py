@@ -3,13 +3,15 @@
 import os
 
 # Flask modules
-from flask import render_template, request, url_for, redirect, send_from_directory
+from flask import render_template, request, url_for, redirect, send_from_directory,flash
 from flask_login import login_user, logout_user, current_user
 
 # App modules
 from app import app, lm
 from app.forms.auth import LoginForm, RegisterForm
 from app.models.user import User
+
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # Provide login manager with load_user callback
@@ -57,9 +59,10 @@ def register():
         user_by_email = User.query.filter_by(email=email).first()
         if user or user_by_email:
             msg = 'Error: User exists!'
+            flash('Email address already exists')
         else:
-            pw_hash = password  # bc.generate_password_hash(password)
-            user = User(username, email, pw_hash)
+
+            user = User(username, email, password=generate_password_hash(password, method='sha256'))
             user.save()
             msg = 'User created, please <a href="' + url_for('login') + '">login</a>'
     else:
