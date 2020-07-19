@@ -1,9 +1,8 @@
-# -*- encoding: utf-8 -*-
 # Python modules
 import os
 
 # Flask modules
-from flask import render_template, request, url_for, redirect, send_from_directory,flash
+from flask import render_template, request, url_for, redirect, send_from_directory, flash
 from flask_login import login_user, logout_user, current_user
 
 # App modules
@@ -21,7 +20,7 @@ def load_user(user_id):
 
 
 # Logout user
-@app.route('/logout.html')
+@app.route('/logout')
 def logout():
     """ Logout user """
     logout_user()
@@ -29,7 +28,7 @@ def logout():
 
 
 # Reset Password - Not
-@app.route('/reset.html')
+@app.route('/reset-password')
 def reset():
     """ Not implemented """
     return render_template('layouts/auth-default.html',
@@ -37,7 +36,7 @@ def reset():
 
 
 # Register a new user
-@app.route('/register.html', methods=['GET', 'POST'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     """ Create a new user """
     # declare the Registration Form
@@ -72,31 +71,36 @@ def register():
                            content=render_template('pages/register.html', form=form, msg=msg))
 
 
-# Authenticate user
-@app.route('/login.html', methods=['GET', 'POST'])
-def login():
-    # Declare the login form
+# SHow Login Form
+@app.route('/login', methods=['GET'])
+def showLoginForm():
     form = LoginForm(request.form)
-    # Flask message injected into the page, in case of any errors
-    msg = None
-    # check if both http method is POST and form is valid on submit
+    return render_template('layouts/auth-default.html', content=render_template('pages/login.html', form=form, ))
+
+
+# Login(Authenticate) User with
+@app.route('/login', methods=['POST'])
+def login():
+    form = LoginForm(request.form)
+
     if form.validate_on_submit():
-        # assign form data to variables
         username = request.form.get('username', '', type=str)
         password = request.form.get('password', '', type=str)
-        # filter User out of database through username
+        remember = True if request.form.get('remember') else False
+
         user = User.query.filter_by(user=username).first()
         if user:
-            # if bc.check_password_hash(user.password, password):
-            if user.password == password:
-                login_user(user)
+            if check_password_hash(user.password, password):
+                login_user(user,remember=remember)
+                flash("Welcome back!")
                 return redirect(url_for('index'))
             else:
                 msg = "Wrong password. Please try again."
+                flash("Wrong password. Please try again.")
         else:
             msg = "Unknown user - Please register."
-    return render_template('layouts/auth-default.html',
-                           content=render_template('pages/login.html', form=form, msg=msg))
+            flash("Unknown user - Please register.")
+    return render_template('layouts/auth-default.html', content=render_template('pages/login.html', form=form, msg=msg))
 
 
 # App main route + generic routing
