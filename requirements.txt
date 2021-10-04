@@ -1,4 +1,4 @@
-flask==2.0.1
+flask==2.0.2
 flask_bcrypt
 flask_login
 flask_migrate
