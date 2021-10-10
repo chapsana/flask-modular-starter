@@ -9,4 +9,4 @@ gunicorn
 WTForms==2.3.3
 Jinja2==3.0.2
 SQLAlchemy==1.4.25
-Werkzeug==2.0.1
+Werkzeug==2.0.2
