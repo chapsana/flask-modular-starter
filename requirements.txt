@@ -7,6 +7,6 @@ flask_sqlalchemy
 gunicorn
 
 WTForms==3.0.0
-Jinja2==3.0.2
+Jinja2==3.0.3
 SQLAlchemy==1.4.25
 Werkzeug==2.0.2
